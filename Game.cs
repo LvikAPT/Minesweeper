@@ -77,7 +77,7 @@ namespace Minesweeper
             }
         }
 
-        private bool IsInBounds(int row, int col)
+        public bool IsInBounds(int row, int col) // Измените на public
         {
             return row >= 0 && row < Rows && col >= 0 && col < Columns;
         }

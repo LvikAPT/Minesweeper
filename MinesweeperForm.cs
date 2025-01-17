@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace Minesweeper
 {
@@ -49,8 +50,36 @@ namespace Minesweeper
             }
             else
             {
-                button.BackColor = Color.LightGray; // Отображаем, что ячейка открыта
-                button.Text = cell.NeighborMines.ToString(); // Показываем количество соседних мин
+                OpenCell(row, col);
+            }
+        }
+
+        private void OpenCell(int row, int col)
+        {
+            if (!game.GetCell(row, col).IsRevealed)
+            {
+                game.OpenCell(row, col);
+                buttons[row, col].BackColor = Color.LightGray; // Отображаем, что ячейка открыта
+                buttons[row, col].Text = game.GetCell(row, col).NeighborMines > 0 ? game.GetCell(row, col).NeighborMines.ToString() : "";
+
+                // Если ячейка не содержит соседних мин, открываем соседние ячейки
+                if (game.GetCell(row, col).NeighborMines == 0)
+                {
+                    for (int x = -1; x <= 1; x++)
+                    {
+                        for (int y = -1; y <= 1; y++)
+                        {
+                            if (x == 0 && y == 0) continue; // Пропустить саму ячейку
+                            int neighborRow = row + x;
+                            int neighborCol = col + y;
+
+                            if (game.IsInBounds(neighborRow, neighborCol))
+                            {
+                                OpenCell(neighborRow, neighborCol);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
