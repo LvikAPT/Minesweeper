@@ -8,6 +8,7 @@ namespace Minesweeper
     {
         private Game game;
         private Button[,] buttons;
+        private Button btnPause;
 
         public MinesweeperForm(Game game)
         {
@@ -33,6 +34,14 @@ namespace Minesweeper
                 }
             }
             PositionButtons(); // Располагаем кнопки
+
+            // Добавляем кнопку паузы
+            btnPause = new Button();
+            btnPause.Text = "Пауза";
+            btnPause.Size = new Size(100, 30);
+            btnPause.Location = new Point((this.ClientSize.Width - btnPause.Width) / 2, this.ClientSize.Height - 50);
+            btnPause.Click += BtnPause_Click;
+            this.Controls.Add(btnPause);
         }
 
         private void PositionButtons()
@@ -56,6 +65,13 @@ namespace Minesweeper
         private void MinesweeperForm_Resize(object sender, EventArgs e)
         {
             PositionButtons(); // Перемещаем кнопки при изменении размера формы
+            btnPause.Location = new Point((this.ClientSize.Width - btnPause.Width) / 2, this.ClientSize.Height - 50); // Перемещаем кнопку паузы
+        }
+
+        private void BtnPause_Click(object sender, EventArgs e)
+        {
+            PauseForm pauseForm = new PauseForm(this);
+            pauseForm.ShowDialog(); // Открываем окно паузы как модальное
         }
 
         private void Button_Click(object sender, EventArgs e)
