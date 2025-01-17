@@ -8,6 +8,8 @@ namespace Minesweeper
         public MainMenuForm()
         {
             InitializeComponent();
+            this.Resize += MainMenuForm_Resize; // Подписываемся на событие изменения размера
+            CenterButtons(); // Центрируем кнопки при инициализации
         }
 
         private void btnEasy_Click(object sender, EventArgs e)
@@ -31,6 +33,26 @@ namespace Minesweeper
             MinesweeperForm gameForm = new MinesweeperForm(game);
             this.Hide();
             gameForm.Show();
+        }
+
+        private void MainMenuForm_Resize(object sender, EventArgs e)
+        {
+            CenterButtons(); // Центрируем кнопки при изменении размера
+        }
+
+        private void CenterButtons()
+        {
+            int buttonWidth = 100;
+            int buttonHeight = 30;
+            int spacing = 10; // расстояние между кнопками
+
+            // Вычисляем начальные координаты для центрирования
+            int startX = (this.ClientSize.Width - buttonWidth) / 2;
+            int startY = (this.ClientSize.Height - (buttonHeight * 3 + spacing * 2)) / 2;
+
+            btnEasy.Location = new System.Drawing.Point(startX, startY);
+            btnMedium.Location = new System.Drawing.Point(startX, startY + buttonHeight + spacing);
+            btnHard.Location = new System.Drawing.Point(startX, startY + (buttonHeight + spacing) * 2);
         }
     }
 }

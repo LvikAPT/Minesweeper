@@ -19,7 +19,7 @@
             // 
             // MinesweeperForm
             // 
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 800); // Увеличьте размер формы
             this.Name = "MinesweeperForm";
             this.Text = "Сапёр";
             this.ResumeLayout(false);
