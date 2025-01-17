@@ -10,6 +10,11 @@ namespace Minesweeper
         public int Mines { get; }
         private Cell[,] board;
 
+        public Cell GetCell(int row, int col)
+        {
+            return board[row, col];
+        }
+
         public Game(int rows, int columns, int mines)
         {
             Rows = rows;
