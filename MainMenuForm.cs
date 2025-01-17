@@ -44,9 +44,9 @@ namespace Minesweeper
         {
             int buttonWidth = 100;
             int buttonHeight = 30;
-            int spacing = 10; // расстояние между кнопками
+            int spacing = 10; // Расстояние между кнопками
 
-            // Вычисляем начальные координаты для центрирования
+            // Центрируем кнопки
             int startX = (this.ClientSize.Width - buttonWidth) / 2;
             int startY = (this.ClientSize.Height - (buttonHeight * 3 + spacing * 2)) / 2;
 

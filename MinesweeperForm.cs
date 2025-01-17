@@ -28,6 +28,7 @@ namespace Minesweeper
                     buttons[i, j].Size = new Size(40, 40);
                     buttons[i, j].Tag = new Point(i, j);
                     buttons[i, j].Click += Button_Click;
+                    buttons[i, j].MouseDown += Button_MouseDown; // Добавляем обработчик для нажатия мыши
                     this.Controls.Add(buttons[i, j]);
                 }
             }
@@ -74,6 +75,30 @@ namespace Minesweeper
             else
             {
                 OpenCell(row, col);
+            }
+        }
+
+        private void Button_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right) // Проверяем, нажата ли правая кнопка мыши
+            {
+                Button button = sender as Button;
+                Point point = (Point)button.Tag;
+                int row = point.X;
+                int col = point.Y;
+
+                Cell cell = game.GetCell(row, col);
+                if (!cell.IsRevealed) // Устанавливаем флажок только на неоткрытых ячейках
+                {
+                    if (button.Text == "F") // Если флажок уже установлен, убираем его
+                    {
+                        button.Text = "";
+                    }
+                    else // Устанавливаем флажок
+                    {
+                        button.Text = "F"; // Устанавливаем текст флажка
+                    }
+                }
             }
         }
 
