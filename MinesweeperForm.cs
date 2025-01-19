@@ -85,8 +85,9 @@ namespace Minesweeper
             if (cell.IsMine)
             {
                 button.BackColor = Color.Red; // Отображаем, что это мина
-                MessageBox.Show("Game Over! You hit a mine.");
-                this.Close(); // Закрываем форму после окончания игры
+                GameOverForm gameOverForm = new GameOverForm();
+                gameOverForm.ShowDialog(); // Показываем окно поражения
+                this.Close(); // Закрываем игровую форму
             }
             else
             {
