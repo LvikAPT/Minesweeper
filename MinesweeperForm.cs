@@ -110,64 +110,70 @@ namespace Minesweeper
             {
                 for (int j = 0; j < game.Columns; j++)
                 {
-                    if (!game.GetCell(i, j).IsMine && !game.GetCell(i, j).IsRevealed)
-                    {
-                        return false; // Если есть закрытая ячейка, игрок не выиграл
+                    if (!game.GetCell(i, j).IsMine && !game.GetCell(i, j).IsRevealed) {
+                        return false; // Если есть не открытая ячейка, игрок не выиграл
                     }
                 }
             }
-            return true; // Все ячейки открыты, игрок выиграл
-        }
 
-        private void Button_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right) // Проверяем, нажата ли правая кнопка мыши
+            // Проверяем, установлены ли флажки на всех минах
+            int flaggedMines = 0;
+            for (int i = 0; i < game.Rows; i++)
             {
-                Button button = sender as Button;
-                Point point = (Point)button.Tag;
-                int row = point.X;
-                int col = point.Y;
-
-                Cell cell = game.GetCell(row, col);
-                if (!cell.IsRevealed) // Устанавливаем флажок только на неоткрытых ячейках
+                for (int j = 0; j < game.Columns; j++)
                 {
-                    if (button.Text == "F") // Если флажок уже установлен, убираем его
+                    if (game.GetCell(i, j).IsMine && buttons[i, j].Text == "F")
                     {
-                        button.Text = "";
-                    }
-                    else // Устанавливаем флажок
-                    {
-                        button.Text = "F"; // Устанавливаем текст флажка
+                        flaggedMines++;
                     }
                 }
             }
+
+            // Игрок выигрывает, если все мины отмечены флажками
+            return flaggedMines == game.TotalMines; // Предполагается, что game.TotalMines содержит общее количество мин
         }
 
         private void OpenCell(int row, int col)
         {
-            if (!game.GetCell(row, col).IsRevealed)
+            // Логика открытия ячейки
+            Cell cell = game.GetCell(row, col);
+            if (!cell.IsRevealed)
             {
-                game.OpenCell(row, col);
-                buttons[row, col].BackColor = Color.LightGray; // Отображаем, что ячейка открыта
-                buttons[row, col].Text = game.GetCell(row, col).NeighborMines > 0 ? game.GetCell(row, col).NeighborMines.ToString() : "";
-
-                // Если ячейка не содержит соседних мин, открываем соседние ячейки
-                if (game.GetCell(row, col).NeighborMines == 0)
+                cell.IsRevealed = true;
+                buttons[row, col].Text = cell.NeighborMines > 0 ? cell.NeighborMines.ToString() : "";
+                buttons[row, col].Enabled = false; // Деактивируем кнопку после открытия
+                if (cell.NeighborMines == 0)
                 {
-                    for (int x = -1; x <= 1; x++)
+                    // Если ячейка пустая, открываем соседние ячейки
+                    for (int i = -1; i <= 1; i++)
                     {
-                        for (int y = -1; y <= 1; y++)
+                        for (int j = -1; j <= 1; j++)
                         {
-                            if (x == 0 && y == 0) continue; // Пропустить саму ячейку
-                            int neighborRow = row + x;
-                            int neighborCol = col + y;
-
-                            if (game.IsInBounds(neighborRow, neighborCol))
+                            if (i == 0 && j == 0) continue; // Пропускаем саму ячейку
+                            int newRow = row + i;
+                            int newCol = col + j;
+                            if (newRow >= 0 && newRow < game.Rows && newCol >= 0 && newCol < game.Columns)
                             {
-                                OpenCell(neighborRow, neighborCol);
+                                OpenCell(newRow, newCol);
                             }
                         }
                     }
+                }
+            }
+        }
+
+        private void Button_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Button button = sender as Button;
+                if (button.Text == "F")
+                {
+                    button.Text = ""; // Убираем флажок
+                }
+                else
+                {
+                    button.Text = "F"; // Устанавливаем флажок
                 }
             }
         }

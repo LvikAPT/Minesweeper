@@ -8,6 +8,7 @@ namespace Minesweeper
         public int Rows { get; }
         public int Columns { get; }
         public int Mines { get; }
+        public int TotalMines => Mines; // Добавлено свойство TotalMines
         private Cell[,] board;
 
         public Cell GetCell(int row, int col)
