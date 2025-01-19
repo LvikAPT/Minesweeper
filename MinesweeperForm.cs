@@ -92,7 +92,31 @@ namespace Minesweeper
             else
             {
                 OpenCell(row, col);
+
+                // Проверяем, выиграл ли игрок
+                if (CheckWinCondition())
+                {
+                    VictoryForm victoryForm = new VictoryForm();
+                    victoryForm.ShowDialog(); // Показываем окно победы
+                    this.Close(); // Закрываем игровую форму
+                }
             }
+        }
+
+        private bool CheckWinCondition()
+        {
+            // Проверяем, все ли ячейки, кроме мин, открыты
+            for (int i = 0; i < game.Rows; i++)
+            {
+                for (int j = 0; j < game.Columns; j++)
+                {
+                    if (!game.GetCell(i, j).IsMine && !game.GetCell(i, j).IsRevealed)
+                    {
+                        return false; // Если есть закрытая ячейка, игрок не выиграл
+                    }
+                }
+            }
+            return true; // Все ячейки открыты, игрок выиграл
         }
 
         private void Button_MouseDown(object sender, MouseEventArgs e)
