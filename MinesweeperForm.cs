@@ -84,7 +84,8 @@ namespace Minesweeper
             Cell cell = game.GetCell(row, col);
             if (cell.IsMine)
             {
-                button.BackColor = Color.Red; // Отображаем, что это мина
+                // Если нажата мина, открываем все клетки
+                ShowAllCells();
                 GameOverForm gameOverForm = new GameOverForm();
                 gameOverForm.ShowDialog(); // Показываем окно поражения
                 this.Close(); // Закрываем игровую форму
@@ -96,11 +97,59 @@ namespace Minesweeper
                 // Проверяем, выиграл ли игрок
                 if (CheckWinCondition())
                 {
+                    ShowAllCells(); // Открываем все клетки при выигрыше
                     VictoryForm victoryForm = new VictoryForm();
                     victoryForm.ShowDialog(); // Показываем окно победы
                     this.Close(); // Закрываем игровую форму
                 }
             }
+        }
+
+        private void ShowAllCells()
+        {
+            for (int i = 0; i < game.Rows; i++)
+            {
+                for (int j = 0; j < game.Columns; j++)
+                {
+                    Cell cell = game.GetCell(i, j);
+                    buttons[i, j].Enabled = false; // Деактивируем кнопку
+                    if (cell.IsMine)
+                    {
+                        buttons[i, j].BackColor = Color.Red; // Отображаем, что это мина
+                    }
+                    else
+                    {
+                        buttons[i, j].Text = cell.NeighborMines > 0 ? cell.NeighborMines.ToString() : "";
+                    }
+                }
+            }
+        }
+
+        private void btnInstantWin_Click(object sender, EventArgs e)
+        {
+            // Открываем все клетки
+            for (int i = 0; i < game.Rows; i++)
+            {
+                for (int j = 0; j < game.Columns; j++)
+                {
+                    Cell cell = game.GetCell(i, j);
+                    cell.IsRevealed = true; // Открываем клетку
+                    buttons[i, j].Enabled = false; // Деактивируем кнопку
+                    if (cell.IsMine)
+                    {
+                        buttons[i, j].BackColor = Color.Red; // Отображаем, что это мина
+                    }
+                    else
+                    {
+                        buttons[i, j].Text = cell.NeighborMines > 0 ? cell.NeighborMines.ToString() : "";
+                    }
+                }
+            }
+
+            // Показываем окно победы
+            VictoryForm victoryForm = new VictoryForm();
+            victoryForm.ShowDialog(); // Показываем окно победы
+            this.Close(); // Закрываем игровую форму
         }
 
         private bool CheckWinCondition()
@@ -110,7 +159,8 @@ namespace Minesweeper
             {
                 for (int j = 0; j < game.Columns; j++)
                 {
-                    if (!game.GetCell(i, j).IsMine && !game.GetCell(i, j).IsRevealed) {
+                    if (!game.GetCell(i, j).IsMine && !game.GetCell(i, j).IsRevealed)
+                    {
                         return false; // Если есть не открытая ячейка, игрок не выиграл
                     }
                 }
