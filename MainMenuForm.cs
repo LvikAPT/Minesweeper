@@ -27,6 +27,16 @@ namespace Minesweeper
             StartGame(24, 24, 99); // Сложный уровень
         }
 
+        private void btnImposible_Click(object sender, EventArgs e)
+        {
+            StartGame(10, 10, 99);  //Невозможный уровень
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit(); // Завершаем приложение
+        }
+
         private void StartGame(int rows, int columns, int mines)
         {
             Game game = new Game(rows, columns, mines);
