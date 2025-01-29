@@ -33,7 +33,7 @@ namespace Minesweeper
             // 
             // btnEasy
             // 
-            this.btnEasy.Size = new System.Drawing.Size(80, 80);
+            this.btnEasy.Size = new System.Drawing.Size(120, 60); // Изменение размера кнопки
             this.btnEasy.TabIndex = 0;
             this.btnEasy.Text = "Легкий";
             this.btnEasy.UseVisualStyleBackColor = true;
@@ -42,7 +42,7 @@ namespace Minesweeper
             // 
             // btnMedium
             // 
-            this.btnMedium.Size = new System.Drawing.Size(80, 80);
+            this.btnMedium.Size = new System.Drawing.Size(120, 60); // Изменение размера кнопки
             this.btnMedium.TabIndex = 1;
             this.btnMedium.Text = "Средний";
             this.btnMedium.UseVisualStyleBackColor = true;
@@ -51,7 +51,7 @@ namespace Minesweeper
             // 
             // btnHard
             // 
-            this.btnHard.Size = new System.Drawing.Size(80, 80);
+            this.btnHard.Size = new System.Drawing.Size(120, 60); // Изменение размера кнопки
             this.btnHard.TabIndex = 2;
             this.btnHard.Text = "Сложный";
             this.btnHard.UseVisualStyleBackColor = true;
@@ -60,7 +60,7 @@ namespace Minesweeper
             // 
             // btnOneCell
             // 
-            this.btnImposible.Size = new System.Drawing.Size(80, 80);
+            this.btnImposible.Size = new System.Drawing.Size(120, 60); // Изменение размера кнопки
             this.btnImposible.TabIndex = 3;
             this.btnImposible.Text = "1 Клетка";
             this.btnImposible.UseVisualStyleBackColor = true;
@@ -69,7 +69,7 @@ namespace Minesweeper
             // 
             // btnExit
             // 
-            this.btnExit.Size = new System.Drawing.Size(80, 80);
+            this.btnExit.Size = new System.Drawing.Size(120, 60); // Изменение размера кнопки
             this.btnExit.TabIndex = 4;
             this.btnExit.Text = "→"; // Стрелочка для выхода
             this.btnExit.UseVisualStyleBackColor = true;
@@ -86,14 +86,15 @@ namespace Minesweeper
             this.Controls.Add(this.btnExit);
 
             // Центрируем кнопки
-            int buttonSize = 80;
+            int buttonWidth = 120; // Ширина кнопок
+            int buttonHeight = 60; // Высота кнопок
             int spacing = 20; // расстояние между кнопками
 
-            this.btnEasy.Location = new System.Drawing.Point((this.ClientSize.Width - buttonSize * 3 - spacing * 2) / 2, (this.ClientSize.Height - buttonSize) / 2 - buttonSize);
-            this.btnMedium.Location = new System.Drawing.Point(this.btnEasy.Location.X + buttonSize + spacing, this.btnEasy.Location.Y);
-            this.btnHard.Location = new System.Drawing.Point(this.btnMedium.Location.X + buttonSize + spacing, this.btnEasy.Location.Y);
-            this.btnImposible.Location = new System.Drawing.Point((this.ClientSize.Width - buttonSize) / 2, this.btnEasy.Location.Y + buttonSize + spacing);
-            this.btnExit.Location = new System.Drawing.Point((this.ClientSize.Width - buttonSize) / 2, this.btnImposible.Location.Y + buttonSize + spacing);
+            this.btnEasy.Location = new System.Drawing.Point((this.ClientSize.Width - buttonWidth) / 2, (this.ClientSize.Height - buttonHeight * 5 - spacing * 4) / 2);
+            this.btnMedium.Location = new System.Drawing.Point((this.ClientSize.Width - buttonWidth) / 2, this.btnEasy.Location.Y + buttonHeight + spacing);
+            this.btnHard.Location = new System.Drawing.Point((this.ClientSize.Width - buttonWidth) / 2, this.btnMedium.Location.Y + buttonHeight + spacing);
+            this.btnImposible.Location = new System.Drawing.Point((this.ClientSize.Width - buttonWidth) / 2, this.btnHard.Location.Y + buttonHeight + spacing);
+            this.btnExit.Location = new System.Drawing.Point((this.ClientSize.Width - buttonWidth) / 2, this.btnImposible.Location.Y + buttonHeight + spacing);
 
             this.Name = "MainMenuForm";
             this.Text = "Меню";

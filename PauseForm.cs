@@ -11,6 +11,7 @@ namespace Minesweeper
         {
             InitializeComponent();
             mainForm = form;
+            this.FormClosing += MinesweeperForm_FormClosing; // Добавляем обработчик закрытия формы
         }
 
         private void btnContinue_Click(object sender, EventArgs e)
@@ -29,6 +30,16 @@ namespace Minesweeper
             MainMenuForm mainMenu = new MainMenuForm();
             mainMenu.Show(); // Показываем главное меню
             this.Close(); // Закрываем окно паузы
+        }
+
+        private void MinesweeperForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Здесь можно добавить логику, если нужно, например, подтверждение закрытия
+            var result = MessageBox.Show("Вы уверены, что хотите выйти?", "Подтверждение", MessageBoxButtons.YesNo);
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Отменяем закрытие формы
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Minesweeper
             this.game = game;
             InitializeGameBoard();
             this.Resize += MinesweeperForm_Resize; // Подписываемся на событие изменения размера
+            this.FormClosing += MinesweeperForm_FormClosing; // Добавляем обработчик закрытия формы
         }
 
         private void InitializeGameBoard()
@@ -39,9 +40,19 @@ namespace Minesweeper
             btnPause = new Button();
             btnPause.Text = "Пауза";
             btnPause.Size = new Size(100, 30);
-            btnPause.Location = new Point((this.ClientSize.Width - btnPause.Width) / 2, this.ClientSize.Height - 50);
+            btnPause.Location = new Point((this.ClientSize.Width - btnPause.Width) / 2, this.ClientSize.Height - btnPause.Height - 10); // Устанавливаем отступ
             btnPause.Click += BtnPause_Click;
             this.Controls.Add(btnPause);
+        }
+
+        private void MinesweeperForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Здесь можно добавить логику, если нужно, например, подтверждение закрытия
+            var result = MessageBox.Show("Вы уверены, что хотите выйти?", "Подтверждение", MessageBoxButtons.YesNo);
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Отменяем закрытие формы
+            }
         }
 
         private void PositionButtons()

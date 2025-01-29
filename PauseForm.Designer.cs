@@ -23,6 +23,7 @@
             this.ClientSize = new System.Drawing.Size(300, 200);
             this.Name = "PauseForm";
             this.Text = "Пауза";
+            this.BackColor = System.Drawing.Color.LightGray;
 
             // Кнопка продолжить
             Button btnContinue = new Button();
